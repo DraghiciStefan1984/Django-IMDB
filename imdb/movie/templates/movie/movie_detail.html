@@ -23,17 +23,19 @@
 		</section>
 		<section class="links">
 			<h3>Links</h3>
-			<ul class="dlinks">
-				<li><a>Download</a></li>
-				<li><a href="#">Link1</a></li>
-				<li><a href="#">Link2</a></li>
-				<li><a href="#">Link3</a></li>
-			</ul>
 			<ul class="wlinks">
 				<li><a>Watch</a></li>
-				<li><a href="#">Link1</a></li>
-				<li><a href="#">Link2</a></li>
-				<li><a href="#">Link3</a></li>
+				{% for link in links %}
+					{% if link.link_type == 'W' %}
+					<li><a href="{{link.link}}">{{link}}</a></li>
+					{% endif %}
+				{% endfor %}
+				<li><a>Download</a></li>
+				{% for link in links %}
+					{% if link.link_type == 'D' %}
+					<li><a href="{{link.link}}">{{link}}</a></li>
+					{% endif %}
+				{% endfor %}
 			</ul>
 		</section>
 
