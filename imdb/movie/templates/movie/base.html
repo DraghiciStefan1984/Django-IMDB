@@ -24,10 +24,10 @@
 	<div class="wrapper">
 
 		<header class="header">
-			<figure class="logo"><a href="index.html"><img src="{% static 'img/logo.png' %}" alt="Logo"></figure></a>
+			<figure class="logo"><a href="{% url 'movies:movie_list' %}"><img src="{% static 'img/logo.png' %}" alt="Logo"></figure></a>
 			<nav class="menu">
 				<ul>
-					<li><a href="index.html">Home</a></li>
+					<li><a href="{% url 'movies:movie_list' %}">Home</a></li>
 					<li><a>Genres</a>
 						<ul>
 							<li><a href="{% url 'movies:movie_category' 'action' %}">Action</a></li>
@@ -38,68 +38,53 @@
 					</li>
 					<li><a>Year</a>
 						<ul>
-							<li><a href="year.html">2017</a></li>
-							<li><a href="year.html">2016</a></li>
-							<li><a href="year.html">2015</a></li>
-							<li><a href="year.html">2014</a></li>
+							<li><a href="{% url 'movies:movie_year' year=2013 %}">2013</a></li>
+							<li><a href="{% url 'movies:movie_year' year=2014 %}">2014</a></li>
+							<li><a href="{% url 'movies:movie_year' year=2014 %}">2015</a></li>
+							<li><a href="{% url 'movies:movie_year' year=2016 %}">2016</a></li>
+							<li><a href="{% url 'movies:movie_year' year=2017 %}">2017</a></li>
+							<li><a href="{% url 'movies:movie_year' year=2018 %}">2018</a></li>
+							<li><a href="{% url 'movies:movie_year' year=2019 %}">2019</a></li>
 						</ul>
 					</li>
 					<li><a>Language</a>
 						<ul>
 							<li><a href="{% url 'movies:movie_language' 'english' %}">English</a></li>
-							<li><a href="{% url 'movies:movie_language' 'german' %">German</a></li>
+							<li><a href="{% url 'movies:movie_language' 'german' %}">German</a></li>
 						</ul>
 					</li>
 					<li class="mobsearch">
 						<form class="mobform">
-							<input type="text" name="s" class="mobsearchfield" placeholder="Search...">
+							<input type="text"  class="mobsearchfield" placeholder="Search...">
 							<input type="submit" value="" class="mobsearchsubmit">
 						</form>
 					</li>
 				</ul>
 			</nav>
-			<form class="search">
-				<input type="text" name="s" class="searchfield" placeholder="Search...">
+			<form class="search" method="GET" action="{% url 'movies:movie_search' %}">
+				<input type="text" name="query" value={{request.GET.q}} class="searchfield" placeholder="Search...">
 				<input type="submit" value="" class="searchsubmit">
 			</form>
 
-			<div class="toggle"><img src="img/menu.svg"></div>
+			<div class="toggle"><img src="{% static 'img/menu.svg' %}"></div>
 		</header>
 		<!-- Swiper -->
 		<div class="homeslider">
 			<div class="swiper-container">
 
 				<div class="swiper-wrapper">
-					<div class="swiper-slide">
-						<img src="images/slider/poster2.jpg">
-						<div class="caption">
-							<div class="captioninside">
-								<h3>Movie Title</h3>
-								<p>Lorem ipsum dolor siamet</p>
-								<a href="single.html" class="playbutton">Play</a>
+					{% for movie in slider_movies %}
+						<div class="swiper-slide">
+							<img src="{{movie.image.url}}">
+							<div class="caption">
+								<div class="captioninside">
+									<h3>{{movie.title}}</h3>
+									<p>{{movie.description}}</p>
+									<a href="{% url 'movies:movie_detail' movie.slug %}" class="playbutton">Play</a>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="swiper-slide">
-						<img src="images/slider/poster1.jpg">
-						<div class="caption">
-							<div class="captioninside">
-								<h3>Movie Title 2</h3>
-								<p>Lorem ipsum dolor siamet</p>
-								<a href="single.html" class="playbutton">Play</a>
-							</div>
-						</div>
-					</div>
-					<div class="swiper-slide">
-						<img src="images/slider/poster2.jpg">
-						<div class="caption">
-							<div class="captioninside">
-								<h3>Movie Title 3</h3>
-								<p>Lorem ipsum dolor siamet</p>
-								<a href="single.html" class="playbutton">Play</a>
-							</div>
-						</div>
-					</div>
+					{% endfor %}
 				</div>
 				<!-- Add Pagination -->
 				<div class="swiper-pagination"></div>
