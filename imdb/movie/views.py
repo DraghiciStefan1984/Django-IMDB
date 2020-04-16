@@ -5,6 +5,19 @@ from .models import Movie, MovieLink
 
 # Create your views here.
 
+
+class HomeView(ListView):
+    model=Movie
+    template_name='movie/home.html'
+
+    def get_context_data(self, **kwargs):
+        context=super().get_context_data(**kwargs)
+        context['top_rated']=self.model.objects.filter(status='tr')
+        context['most_watched']=self.model.objects.filter(status='mw')
+        context['recently_added']=self.model.objects.filter(status='ra')
+        return context
+
+
 class MovieList(ListView):
     model=Movie
     paginate_by=1
