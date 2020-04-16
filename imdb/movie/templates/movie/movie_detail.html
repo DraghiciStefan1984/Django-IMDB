@@ -42,9 +42,10 @@
 		<section class="related">
 			<h3>Related movies</h3>
 			<div class="relatemovie">
-				{% for  in  %}{% endfor %}
-				<a href="#"><img src="images/2.jpg"></a>
-				<a href="#"><span class="relatedname">John Wick</span></a>
+				{% for movie in related_movies %}
+					<a href="{% url 'movies:movie_detail' movie.slug %}"><img src="{{movie.image.url}}"></a>
+					<a href="{% url 'movies:movie_detail' movie.slug %}"><span class="relatedname">{{movie.title}}</span></a>
+				{% endfor %}
 			</div>
 		</section>
 
